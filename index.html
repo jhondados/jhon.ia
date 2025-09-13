@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jhon Enrique Cernadas Martinez - Engenheiro de IA Sênior</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --background-dark: #0f172a;
+            --background-light: #f1f5f9;
+            --text-dark-primary: #f8fafc;
+            --text-dark-secondary: #94a3b8;
+            --text-light-primary: #0f172a;
+            --text-light-secondary: #475569;
+            --accent: #38bdf8; /* Azul Elétrico */
+            --accent-glow: rgba(56, 189, 248, 0.1);
+            --border-dark: #1e293b;
+            --border-light: #cbd5e1;
+        }
+        .text-gradient {
+            background: linear-gradient(90deg, var(--accent), #a7f3d0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background-light);
+            color: var(--text-light-secondary);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .nav-link {
+            transition: all 0.3s ease;
+        }
+        .nav-link.active {
+            background-color: var(--accent);
+            color: var(--background-dark);
+        }
+        .nav-link:not(.active):hover {
+            background-color: rgba(255,255,255,0.1);
+            color: var(--text-dark-primary);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            animation: fadeInModal 0.5s;
+        }
+        @keyframes fadeInModal { from { opacity: 0; } to { opacity: 1; } }
+
+        .modal-content {
+            animation: slideInModal 0.5s;
+        }
+        @keyframes slideInModal { from { transform: translateY(-50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .scroll-animate.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .text-accent { color: var(--accent); }
+
+        .glow-border-hover {
+            position: relative;
+            overflow: hidden;
+        }
+        .glow-border-hover::before {
+            content: '';
+            position: absolute;
+            top: 0; right: 0; bottom: 0; left: 0;
+            z-index: -1;
+            border-radius: inherit;
+            background: conic-gradient(from 180deg at 50% 50%, var(--accent) 0deg, #a7f3d0 180deg, var(--accent) 360deg);
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .glow-border-hover:hover::before {
+            opacity: 1;
+        }
+        .glow-border-hover > * {
+            position: relative;
+            z-index: 1;
+            background: inherit;
+        }
+
+        /* Animated Grid Overlay */
+        .grid-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+            background-image:
+                linear-gradient(to right, rgba(56, 189, 248, 0.1) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(56, 189, 248, 0.1) 1px, transparent 1px);
+            background-size: 40px 40px;
+            animation: moveGrid 20s linear infinite;
+        }
+        @keyframes moveGrid { from { background-position: 0 0; } to { background-position: -40px -40px; } }
+
+        /* Starfield Background */
+        .starfield {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -3;
+            --star-color: rgba(229, 231, 235, 0.7);
+        }
+        .stars {
+            width: 1px; height: 1px;
+            background: transparent;
+            box-shadow: var(--stars-sm);
+            animation: animStar 50s linear infinite;
+        }
+        .stars2 {
+            width: 2px; height: 2px;
+            background: transparent;
+            box-shadow: var(--stars-md);
+            animation: animStar 100s linear infinite;
+        }
+        @keyframes animStar {
+            from { transform: translateY(0px); }
+            to { transform: translateY(-2000px); }
+        }
+
+        /* New Aurora Background */
+        .aurora-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background-color: var(--background-light);
+            overflow: hidden;
+        }
+        .aurora-shape {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.3;
+        }
+        .aurora-shape1 {
+            width: 400px; height: 400px;
+            background: var(--accent);
+            top: 10%; left: 20%;
+            animation: moveAurora1 25s infinite alternate ease-in-out;
+        }
+        .aurora-shape2 {
+            width: 300px; height: 300px;
+            background: #a7f3d0;
+            bottom: 15%; right: 25%;
+            animation: moveAurora2 30s infinite alternate ease-in-out;
+        }
+        @keyframes moveAurora1 { from { transform: translate(-50%, -50%) rotate(0deg); } to { transform: translate(50%, 50%) rotate(360deg); } }
+        @keyframes moveAurora2 { from { transform: translate(30%, 20%) rotate(0deg); } to { transform: translate(-30%, -20%) rotate(-360deg); } }
+
+        /* Spotlight effect for portfolio cards */
+        .spotlight-card {
+            position: relative;
+            overflow: hidden;
+        }
+        .spotlight-card:hover::before {
+            content: '';
+            position: absolute;
+            width: 200px; height: 200px;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.2), transparent 70%);
+            border-radius: 50%;
+            transform: translate(var(--x, -50%), var(--y, -50%));
+            transition: transform 0.1s ease-out;
+            pointer-events: none;
+        }
+
+        /* Glitch Effect */
+        .glitch-hover {
+            position: relative;
+            cursor: pointer;
+        }
+        .glitch-hover:hover::before, .glitch-hover:hover::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--background-light);
+        }
+        .glitch-hover:hover::before {
+            left: 2px;
+            text-shadow: -1px 0 #ff00c1;
+            animation: glitch-anim-1 1s infinite linear alternate-reverse;
+        }
+        .glitch-hover:hover::after {
+            left: -2px;
+            text-shadow: -1px 0 var(--accent);
+            animation: glitch-anim-2 1s infinite linear alternate-reverse;
+        }
+        @keyframes glitch-anim-1 { 0% { clip-path: inset(5% 0 90% 0); } 100% { clip-path: inset(80% 0 5% 0); } }
+        @keyframes glitch-anim-2 { 0% { clip-path: inset(70% 0 10% 0); } 100% { clip-path: inset(10% 0 85% 0); } }
+
+        /* Timeline Animation */
+        .timeline-line::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -2px;
+            width: 2px; height: 100%;
+            background: linear-gradient(to bottom, var(--accent), transparent);
+            transform: scaleY(0);
+            transform-origin: top;
+            transition: transform 0.8s ease-out;
+        }
+        .scroll-animate.visible .timeline-line::before {
+            transform: scaleY(1);
+        }
+
+        /* Skills Hexagon Grid */
+        .hexagon-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+        }
+        .hexagon {
+            position: relative;
+            width: 120px;
+            height: 138.56px; /* width * sqrt(3) / 2 * 2 */
+            background-color: #e2e8f0;
+            margin: 0.5rem;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            transition: all 0.3s ease-in-out;
+        }
+        .hexagon-inner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            color: var(--text-light-secondary);
+            transition: color 0.3s ease-in-out;
+        }
+        .hexagon-inner .icon {
+            transition: color 0.3s ease-in-out;
+        }
+        .hexagon-inner .skill-name {
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+        .hexagon:hover {
+            transform: translateY(-8px) scale(1.05);
+            background-color: #fff;
+            box-shadow: 0 10px 30px var(--accent-glow);
+        }
+        .hexagon:hover .hexagon-inner .icon {
+            color: var(--accent);
+        }
+
+        /* Ajustes para telas menores */
+        @media (max-width: 767px) {
+            .hexagon {
+                width: 90px;
+                height: 103.92px; /* 90 * sqrt(3) / 2 * 2 */
+                margin: 0.25rem;
+            }
+            .hexagon-inner .skill-name { font-size: 0.7rem; }
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="starfield">
+        <div class="stars"></div>
+        <div class="stars2"></div>
+    </div>
+    <div class="aurora-background"><div class="aurora-shape aurora-shape1"></div><div class="aurora-shape aurora-shape2"></div></div>
+    <div class="grid-overlay"></div>
+
+
+    <div class="flex">
+        <!-- Sidebar Navigation -->
+        <nav id="sidebar" class="hidden md:flex w-72 h-screen bg-slate-900/80 backdrop-blur-lg border-r border-slate-800 flex-col fixed p-8 justify-between">
+            <div>
+                <a href="#inicio" class="text-3xl font-extrabold text-white mb-4 block">Jhon<span class="text-accent">.ai</span></a>
+                <p class="text-slate-400 mb-16">Engenheiro de IA Sênior</p>
+                <div class="space-y-3">
+                    <a href="#inicio" class="nav-link flex items-center gap-4 py-3 px-4 rounded-lg text-slate-300">
+                        <i data-lucide="home" class="w-5 h-5"></i><span>Início</span>
+                    </a>
+                    <a href="#sobre" class="nav-link flex items-center gap-4 py-3 px-4 rounded-lg text-slate-300">
+                        <i data-lucide="user" class="w-5 h-5"></i><span>Sobre</span>
+                    </a>
+                    <a href="#habilidades" class="nav-link flex items-center gap-4 py-3 px-4 rounded-lg text-slate-300">
+                        <i data-lucide="cpu" class="w-5 h-5"></i><span>Habilidades</span>
+                    </a>
+                    <a href="#portfolio" class="nav-link flex items-center gap-4 py-3 px-4 rounded-lg text-slate-300">
+                        <i data-lucide="layers" class="w-5 h-5"></i><span>Portfólio</span>
+                    </a>
+                     <a href="#blog" class="nav-link flex items-center gap-4 py-3 px-4 rounded-lg text-slate-300">
+                        <i data-lucide="message-square" class="w-5 h-5"></i><span>Blog</span>
+                    </a>
+                    <a href="#noticias" class="nav-link flex items-center gap-4 py-3 px-4 rounded-lg text-slate-300">
+                        <i data-lucide="newspaper" class="w-5 h-5"></i><span>Notícias</span>
+                    </a>
+                    <a href="#contato" class="nav-link flex items-center gap-4 py-3 px-4 rounded-lg text-slate-300">
+                        <i data-lucide="mail" class="w-5 h-5"></i><span>Contato</span>
+                    </a>
+                </div>
+            </div>
+            <div class="text-sm">
+                <p class="text-slate-500">&copy; 2025 Jhon Martinez</p>
+            </div>
+        </nav>
+        
+        <!-- Mobile Header -->
+        <header class="md:hidden bg-slate-900/80 backdrop-blur-lg sticky top-0 z-50 border-b border-slate-800 w-full">
+             <div class="container mx-auto px-4 sm:px-6">
+                <div class="flex items-center justify-between h-16">
+                    <a href="#inicio" class="text-2xl font-extrabold text-white">Jhon<span class="text-accent">.ai</span></a>
+                    <button id="mobile-menu-button" class="p-2 rounded-md text-slate-300">
+                        <i data-lucide="menu" class="h-6 w-6"></i>
+                    </button>
+                </div>
+            </div>
+             <div id="mobile-menu" class="hidden p-4 space-y-2 bg-slate-900">
+                <a href="#inicio" class="nav-link block text-center py-3 rounded-lg text-slate-300"><span>Início</span></a>
+                <a href="#sobre" class="nav-link block text-center py-3 rounded-lg text-slate-300"><span>Sobre</span></a>
+                <a href="#habilidades" class="nav-link block text-center py-3 rounded-lg text-slate-300"><span>Habilidades</span></a>
+                <a href="#portfolio" class="nav-link block text-center py-3 rounded-lg text-slate-300"><span>Portfólio</span></a>
+                <a href="#blog" class="nav-link block text-center py-3 rounded-lg text-slate-300"><span>Blog</span></a>
+                <a href="#noticias" class="nav-link block text-center py-3 rounded-lg text-slate-300"><span>Notícias</span></a>
+                <a href="#contato" class="nav-link block text-center py-3 rounded-lg text-slate-300"><span>Contato</span></a>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="w-full md:ml-72 p-4 md:p-8 lg:p-12">
+            <div class="space-y-16 md:space-y-24">
+                <section id="inicio" class="min-h-screen flex items-center relative overflow-hidden">
+                    <div class="absolute right-0 top-0 h-full w-full md:w-1/2 flex items-center justify-center opacity-0 animate-[fadeIn_1.5s_ease-out_0.5s_forwards]">
+                        <img src="https://images.unsplash.com/photo-1677756119517-756a188d2d94?q=80&w=2000&auto=format&fit=crop" 
+                             alt="AI Robot Background" 
+                             class="object-cover h-full w-full opacity-20 md:opacity-30 [mask-image:radial-gradient(circle_at_center,black_40%,transparent_80%)]">
+                    </div>
+                    <div class="relative w-full z-10">
+                        <div class="max-w-3xl scroll-animate">
+                            <span class="font-semibold text-accent uppercase tracking-wider">Jhon Enrique Cernadas Martinez</span>
+                            <h1 class="glitch-hover text-4xl md:text-6xl font-extrabold text-text-light-primary mt-4 leading-tight text-gradient" data-text="Transformando Dados em Inovação com IA">
+                                Transformando Dados em Inovação com <span class="text-text-light-primary" data-text="IA">IA</span>
+                            </h1>
+                            <p class="mt-6 text-lg text-text-light-secondary">
+                                Apaixonado por criar soluções de IA eficazes que resolvem problemas complexos e geram valor real para os negócios.
+                            </p>
+                             <div class="mt-10">
+                                <a href="#contato" class="bg-accent text-slate-900 font-bold py-4 px-8 rounded-lg shadow-lg shadow-cyan-500/20 hover:bg-gradient-to-r from-accent to-cyan-400 transition-all duration-300 transform hover:scale-105">
+                                    Entre em Contato
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="sobre" class="scroll-animate">
+                    <h2 class="text-3xl font-extrabold text-text-light-primary mb-4">Sobre Mim</h2>
+                    <p class="max-w-2xl text-text-light-secondary mb-12">Sou um Engenheiro de IA Sênior com vasta experiência em Business Intelligence e Data Science. Minha carreira é marcada pela busca constante por excelência e pela criação de soluções inovadoras que geram resultados mensuráveis.</p>
+                    <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-200 glow-border-hover">
+                        <h3 class="text-2xl font-bold text-text-light-primary mb-8">Experiência Profissional</h3>
+                         <div class="relative pl-10 space-y-12 timeline-line">
+                             <div class="relative">
+                                <div class="absolute -left-[46px] top-1 w-6 h-6 bg-accent rounded-full border-4 border-white ring-4 ring-accent/20 animate-pulse"></div>
+                                <p class="text-sm text-accent font-semibold">2025 - Presente</p>
+                                <h4 class="text-xl font-bold text-text-light-primary mt-1">Eng. de IA / Analista de Dados Sênior</h4>
+                                <p class="text-md text-text-light-secondary">Santillana Brasil - Editora Moderna</p>
+                            </div>
+                            <div class="relative">
+                                <div class="absolute -left-[46px] top-1 w-6 h-6 bg-accent/70 rounded-full border-4 border-white"></div>
+                                <p class="text-sm text-accent font-semibold">2021 - 2024</p>
+                                <h4 class="text-xl font-bold text-text-light-primary mt-1">Analista BI Sênior</h4>
+                                <p class="text-md text-text-light-secondary">Trademaster (Fintech)</p>
+                            </div>
+                         </div>
+                    </div>
+                </section>
+
+                <section id="habilidades" class="scroll-animate">
+                    <h2 class="text-3xl font-extrabold text-text-light-primary mb-4">Habilidades Técnicas</h2>
+                    <p class="max-w-2xl text-text-light-secondary mb-12">As ferramentas e tecnologias que utilizo para construir soluções de dados e IA de alto impacto.</p>
+                    <div class="hexagon-grid">
+                        <div class="hexagon">
+                            <div class="hexagon-inner">
+                                <i data-lucide="brain-circuit" class="w-8 h-8 icon"></i>
+                                <span class="skill-name">IA Generativa</span>
+                            </div>
+                        </div>
+                        <div class="hexagon">
+                            <div class="hexagon-inner">
+                                <i data-lucide="database" class="w-8 h-8 icon"></i>
+                                <span class="skill-name">Python & SQL</span>
+                            </div>
+                        </div>
+                        <div class="hexagon">
+                            <div class="hexagon-inner">
+                                <i data-lucide="cloud" class="w-8 h-8 icon"></i>
+                                <span class="skill-name">AWS & GCP</span>
+                            </div>
+                        </div>
+                        <div class="hexagon">
+                            <div class="hexagon-inner">
+                                <i data-lucide="bar-chart-3" class="w-8 h-8 icon"></i>
+                                <span class="skill-name">Power BI</span>
+                            </div>
+                        </div>
+                        <div class="hexagon">
+                            <div class="hexagon-inner">
+                                <i data-lucide="git-branch" class="w-8 h-8 icon"></i>
+                                <span class="skill-name">MLOps</span>
+                            </div>
+                        </div>
+                        <div class="hexagon">
+                            <div class="hexagon-inner">
+                                <i data-lucide="code" class="w-8 h-8 icon"></i>
+                                <span class="skill-name">React & Node.js</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <section id="portfolio" class="scroll-animate">
+                     <h2 class="text-3xl font-extrabold text-text-light-primary mb-4">Portfólio de Projetos</h2>
+                     <p class="max-w-2xl text-text-light-secondary mb-12">Cases de sucesso que demonstram a aplicação prática de dados e IA para resolver desafios complexos.</p>
+                     <div class="grid md:grid-cols-2 gap-8">
+                         <div class="spotlight-card bg-white border border-slate-200 p-8 rounded-2xl shadow-lg transition-all duration-300 hover:border-accent/50 hover:-translate-y-2">
+                             <h3 class="text-xl font-bold text-text-light-primary">App Preditivo de Churn com IA Generativa</h3>
+                             <p class="text-text-light-secondary mt-2">Solução web que utiliza a API Gemini para prever o risco de churn de clientes e gerar ações de retenção personalizadas.</p>
+                             <button class="open-modal-btn mt-6 text-sm font-semibold text-accent" data-modal="portfolio-1">Ver Detalhes do Projeto &rarr;</button>
+                         </div>
+                         <div class="spotlight-card bg-white border border-slate-200 p-8 rounded-2xl shadow-lg transition-all duration-300 hover:border-accent/50 hover:-translate-y-2">
+                             <h3 class="text-xl font-bold text-text-light-primary">Clusterização Inteligente de Clientes</h3>
+                             <p class="text-text-light-secondary mt-2">Implementação de Machine Learning (K-Means) para segmentar clientes e escolas, otimizando estratégias de marketing.</p>
+                             <button class="open-modal-btn mt-6 text-sm font-semibold text-accent" data-modal="portfolio-2">Ver Detalhes do Projeto &rarr;</button>
+                         </div>
+                     </div>
+                </section>
+
+                <section id="blog" class="scroll-animate">
+                    <h2 class="text-3xl font-extrabold text-text-light-primary mb-4">Blog & Insights</h2>
+                    <p class="max-w-2xl text-text-light-secondary mb-12">Artigos e reflexões sobre o universo da Inteligência Artificial, dados e tecnologia.</p>
+                     <div class="space-y-8">
+                        <div class="bg-white p-6 rounded-2xl shadow-lg border border-slate-200 glow-border-hover">
+                             <h3 class="text-xl font-bold text-text-light-primary">Além da Predição: O Papel da IA Generativa na Retenção de Clientes</h3>
+                             <p class="text-text-light-secondary mt-2">Modelos como o Gemini não estão apenas prevendo o churn; eles estão revolucionando a forma como interagimos com clientes em risco...</p>
+                             <button class="open-modal-btn mt-4 text-sm font-semibold text-accent" data-modal="blog-1">Ler Artigo Completo &rarr;</button>
+                         </div>
+                        <div class="bg-white p-6 rounded-2xl shadow-lg border border-slate-200 glow-border-hover">
+                             <h3 class="text-xl font-bold text-text-light-primary">Do BI à Engenharia de IA: Uma Jornada de Evolução Contínua</h3>
+                             <p class="text-text-light-secondary mt-2">A transição de Business Intelligence para IA não é apenas uma mudança de ferramentas, mas uma mudança de mindset. Compartilho minha jornada...</p>
+                             <button class="open-modal-btn mt-4 text-sm font-semibold text-accent" data-modal="blog-2">Ler Artigo Completo &rarr;</button>
+                         </div>
+                     </div>
+                </section>
+                
+                <section id="noticias" class="scroll-animate">
+                    <h2 class="text-3xl font-extrabold text-text-light-primary mb-4">Notícias e Reconhecimentos</h2>
+                    <p class="max-w-2xl text-text-light-secondary mb-12">Meu engajamento com a comunidade de tecnologia e educação contínua.</p>
+                     <div class="grid md:grid-cols-2 gap-8">
+                        <div class="bg-white p-6 rounded-2xl shadow-lg border border-slate-200 glow-border-hover">
+                           <div class="flex items-start gap-4">
+                                <i data-lucide="award" class="w-8 h-8 text-accent flex-shrink-0 mt-1"></i>
+                                <div>
+                                    <h3 class="font-bold text-text-light-primary">Reconhecimento Google Cloud</h3>
+                                    <p class="text-sm text-text-light-secondary">Conquista de 23 selos de habilidade na plataforma Google Skill Boost, validando expertise em ferramentas de nuvem e IA da GCP.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white p-6 rounded-2xl shadow-lg border border-slate-200 glow-border-hover">
+                           <div class="flex items-start gap-4">
+                                <i data-lucide="mic" class="w-8 h-8 text-accent flex-shrink-0 mt-1"></i>
+                                <div>
+                                    <h3 class="font-bold text-text-light-primary">Palestra: AI & Fintech Summit</h3>
+                                    <p class="text-sm text-text-light-secondary">Convidado para palestrar sobre "Análise de Risco de Crédito com IA Generativa" no próximo grande evento de tecnologia.</p>
+                                </div>
+                            </div>
+                        </div>
+                     </div>
+                </section>
+
+                <section id="contato" class="scroll-animate">
+                    <h2 class="text-3xl font-extrabold text-text-light-primary mb-4">Vamos Conversar</h2>
+                    <p class="max-w-2xl text-text-light-secondary mb-12">Estou sempre aberto a novos desafios. Entre em contato para discutirmos seu próximo projeto.</p>
+                    <div class="bg-white p-8 rounded-2xl shadow-lg border border-slate-200 grid md:grid-cols-3 gap-8">
+                        <a href="mailto:enriquecernadas2021@gmail.com" class="text-center group p-4 rounded-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-cyan-500/20">
+                            <i data-lucide="mail" class="w-10 h-10 text-accent mx-auto mb-2"></i>
+                            <h3 class="font-bold text-text-light-primary group-hover:text-accent">E-mail</h3>
+                            <p class="text-sm text-text-light-secondary">enriquecernadas2021@gmail.com</p>
+                        </a>
+                        <a href="tel:+5511975726312" class="text-center group p-4 rounded-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-cyan-500/20">
+                            <i data-lucide="phone" class="w-10 h-10 text-accent mx-auto mb-2"></i>
+                            <h3 class="font-bold text-text-light-primary group-hover:text-accent">Telefone</h3>
+                            <p class="text-sm text-text-light-secondary">(11) 97572-6312</p>
+                        </a>
+                         <a href="https://www.linkedin.com/in/jhon-enrique-cernadas-martinez-03215a69/" target="_blank" class="text-center group p-4 rounded-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-cyan-500/20">
+                            <i data-lucide="linkedin" class="w-10 h-10 text-accent mx-auto mb-2"></i>
+                            <h3 class="font-bold text-text-light-primary group-hover:text-accent">LinkedIn</h3>
+                            <p class="text-sm text-text-light-secondary">Jhon Enrique C. Martinez</p>
+                        </a>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div id="portfolio-1" class="modal">
+        <div class="modal-content bg-slate-900 border border-slate-800 max-w-4xl w-full m-auto p-8 rounded-2xl relative">
+            <button class="close-modal-btn absolute top-6 right-6 text-slate-400 hover:text-white" aria-label="Fechar modal"><i data-lucide="x" class="w-6 h-6"></i></button>
+            <h3 class="text-2xl font-bold text-white mb-4 text-gradient">App Preditivo de Churn com IA Generativa</h3>
+            <div class="grid md:grid-cols-2 gap-8 items-start">
+                <div>
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e28f81?q=80&w=1200&auto=format&fit=crop" alt="Dashboard de Churn" class="rounded-lg shadow-lg mb-6">
+                    <div class="text-slate-400 space-y-4">
+                        <p><strong>O Desafio:</strong> Reduzir a taxa de cancelamento de clientes (churn) que impactava a receita recorrente, substituindo um processo de identificação de risco manual e ineficiente.</p>
+                        <p><strong>Resultados:</strong> Redução de 15% na taxa de churn nos primeiros 6 meses e aumento de 40% na produtividade da equipe de retenção.</p>
+                    </div>
+                </div>
+                <div class="text-slate-400 space-y-6">
+                    <div>
+                        <h4 class="font-bold text-white mb-2">KPIs e Métricas do Dashboard</h4>
+                        <ul class="list-disc list-inside text-sm space-y-1">
+                            <li>Taxa de Churn (Mensal/Trimestral)</li>
+                            <li>Score de Risco de Churn por Cliente</li>
+                            <li>Customer Lifetime Value (LTV) em Risco</li>
+                            <li>Motivos de Churn (Previstos pela IA)</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white mb-2">Diagnóstico com IA Generativa</h4>
+                        <p class="text-sm">A API Gemini analisa dados de uso da plataforma, histórico de compras e interações com suporte para gerar um diagnóstico claro. Ex: "Risco de churn elevado devido à baixa frequência de login nos últimos 30 dias e ausência de compra de novos produtos, padrão similar a 85% dos clientes que cancelaram no último trimestre."</p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white mb-2">Recomendações Geradas</h4>
+                        <p class="text-sm">Com base no diagnóstico, a IA cria ações personalizadas. Ex: "Gerar e-mail com oferta de 15% de desconto no próximo ciclo de faturamento. Criar talking points para a equipe de vendas focado nos benefícios do recurso X, que o cliente utiliza pouco."</p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white mb-2">Tecnologias Utilizadas</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-slate-700 text-xs font-semibold px-2 py-1 rounded">Google Gemini</span>
+                            <span class="bg-slate-700 text-xs font-semibold px-2 py-1 rounded">Python (Flask)</span>
+                            <span class="bg-slate-700 text-xs font-semibold px-2 py-1 rounded">React</span>
+                            <span class="bg-slate-700 text-xs font-semibold px-2 py-1 rounded">AWS</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+     <div id="portfolio-2" class="modal">
+        <div class="modal-content bg-slate-900 border border-slate-800 max-w-4xl w-full m-auto p-8 rounded-2xl relative">
+            <button class="close-modal-btn absolute top-6 right-6 text-slate-400 hover:text-white" aria-label="Fechar modal"><i data-lucide="x" class="w-6 h-6"></i></button>
+            <h3 class="text-2xl font-bold text-white mb-4 text-gradient">Clusterização Inteligente de Clientes e Escolas</h3>
+            <div class="grid md:grid-cols-2 gap-8 items-start">
+                <div>
+                    <img src="https://images.unsplash.com/photo-1560439514-4e9645039924?q=80&w=1200&auto=format&fit=crop" alt="Dashboard de Segmentação de Clientes" class="rounded-lg shadow-lg mb-6">
+                    <div class="text-slate-400 space-y-4">
+                        <p><strong>O Desafio:</strong> Otimizar campanhas de marketing e vendas para uma vasta base de clientes e escolas, que eram tratados de forma homogênea, resultando em baixo engajamento.</p>
+                        <p><strong>Resultados:</strong> Aumento de 30% na taxa de abertura de e-mails e crescimento de 18% na conversão de leads qualificados após a implementação da segmentação.</p>
+                    </div>
+                </div>
+                <div class="text-slate-400 space-y-6">
+                    <div>
+                        <h4 class="font-bold text-white mb-2">KPIs e Métricas do Dashboard</h4>
+                        <ul class="list-disc list-inside text-sm space-y-1">
+                            <li>Distribuição de Clientes por Cluster</li>
+                            <li>Receita Média por Cluster</li>
+                            <li>Taxa de Conversão por Campanha/Cluster</li>
+                            <li>Perfil Demográfico (Região, Porte da Escola)</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white mb-2">Diagnóstico com IA Generativa</h4>
+                        <p class="text-sm">Após a clusterização com K-Means, a IA Generativa foi usada para criar "personas" para cada cluster. Ex: "Cluster 1: 'Inovadores Digitais'. Escolas de grande porte em capitais, alto investimento em tecnologia, mas baixa adoção de soluções de humanas. Principal dor: engajamento de alunos em leitura."</p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white mb-2">Recomendações Geradas</h4>
+                        <p class="text-sm">A IA sugere estratégias de marketing para cada persona. Ex: "Para o Cluster 1, criar campanha de e-mail marketing focada em nossa plataforma de leitura gamificada. Destacar cases de sucesso de escolas com perfil similar. Oferecer um webinar exclusivo sobre 'Tecnologia e Humanidades'."</p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white mb-2">Tecnologias Utilizadas</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-slate-700 text-xs font-semibold px-2 py-1 rounded">Python (Scikit-learn)</span>
+                            <span class="bg-slate-700 text-xs font-semibold px-2 py-1 rounded">Pandas</span>
+                            <span class="bg-slate-700 text-xs font-semibold px-2 py-1 rounded">Power BI</span>
+                            <span class="bg-slate-700 text-xs font-semibold px-2 py-1 rounded">Google Cloud Platform</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="blog-1" class="modal">
+        <div class="modal-content bg-slate-900 border border-slate-800 max-w-2xl w-full m-auto p-8 rounded-2xl relative">
+            <button class="close-modal-btn absolute top-6 right-6 text-slate-400 hover:text-white" aria-label="Fechar modal"><i data-lucide="x" class="w-6 h-6"></i></button>
+            <h3 class="text-2xl font-bold text-white mb-4 text-gradient">Além da Predição: Como a IA Generativa está Humanizando a Retenção de Clientes</h3>
+            <div class="text-slate-400 space-y-4">
+                <p>Modelos como o Gemini não estão apenas prevendo o churn; eles estão revolucionando a forma como interagimos com clientes em risco. Neste artigo, exploro como a IA pode gerar roteiros de comunicação empáticos, sugerir ofertas personalizadas e capacitar as equipes comerciais para construir relacionamentos mais fortes e duradouros, transformando a retenção em uma ciência humana.</p><p>A verdadeira magia acontece quando a IA generativa atua como uma parceira criativa para a equipe de vendas. Imagine um cenário onde, ao identificar um cliente com alto risco de churn, o sistema não apenas dispara um alerta, mas também gera três versões de um e-mail de reengajamento, cada uma com um tom diferente: uma mais direta e focada em uma nova oferta, outra mais empática, reconhecendo o histórico do cliente, e uma terceira focada em colher feedback. Isso economiza um tempo valioso e garante uma abordagem consistente e de alta qualidade.</p><p>Estamos entrando em uma nova era da gestão de relacionamento com o cliente, onde a eficiência da máquina se une à empatia humana. A IA generativa não substitui o toque humano; ela o amplifica, permitindo que as equipes se concentrem no que fazem de melhor: construir conexões genuínas.</p>
+            </div>
+        </div>
+    </div>
+     <div id="blog-2" class="modal">
+        <div class="modal-content bg-slate-900 border border-slate-800 max-w-2xl w-full m-auto p-8 rounded-2xl relative">
+            <button class="close-modal-btn absolute top-6 right-6 text-slate-400 hover:text-white" aria-label="Fechar modal"><i data-lucide="x" class="w-6 h-6"></i></button>
+            <h3 class="text-2xl font-bold text-white mb-4 text-gradient">Do BI à Engenharia de IA: Uma Jornada de Evolução Contínua</h3>
+             <div class="text-slate-400 space-y-4">
+                <p>A transição de Business Intelligence para Inteligência Artificial não é apenas uma mudança de ferramentas, mas uma mudança de mindset. Compartilho minha jornada, os desafios de dominar novas tecnologias como AWS, GCP e MLOps, e como a base analítica do BI foi fundamental para construir soluções de IA que realmente geram valor para o negócio.</p><p>No BI, o foco principal é olhar para o passado para entender o presente. Criamos dashboards e relatórios que respondem a perguntas como "O que aconteceu?". Na Engenharia de IA, damos um passo além: usamos os dados do passado para prever e influenciar o futuro, respondendo a perguntas como "O que vai acontecer?" e "O que devemos fazer a respeito?".</p><p>Minha experiência em modelagem de dados e ETL foi a base que me permitiu construir pipelines de dados robustos para modelos de Machine Learning. A capacidade de traduzir requisitos de negócio em KPIs, desenvolvida no BI, é a mesma que me ajuda a definir as métricas de sucesso para um projeto de IA. A jornada é desafiadora, mas incrivelmente gratificante. A mensagem que deixo é: não subestime os fundamentos. Uma base sólida em dados é o melhor trampolim para o futuro da inteligência artificial.</p>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Generate stars for starfield effect
+            function generateStars(count, size) {
+                let stars = '';
+                const screenWidth = window.innerWidth;
+                const screenHeight = 2000; // Taller than viewport for seamless animation
+                for (let i = 0; i < count; i++) {
+                    stars += `${Math.random() * screenWidth}px ${Math.random() * screenHeight}px var(--star-color),`;
+                }
+                return stars.slice(0, -1);
+            }
+            document.documentElement.style.setProperty('--stars-sm', generateStars(700));
+            document.documentElement.style.setProperty('--stars-md', generateStars(200));
+
+
+            lucide.createIcons();
+            
+            // Navigation logic
+            const allLinks = document.querySelectorAll('a[href^="#"]');
+            const mainContent = document.querySelector('main');
+            const sections = mainContent.querySelectorAll('section');
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.getAttribute('id');
+                         allLinks.forEach(link => {
+                            link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+                        });
+                    }
+                });
+            }, { root: null, rootMargin: "-50% 0px -50% 0px" });
+
+            sections.forEach(section => observer.observe(section));
+            
+            if (mobileMenuButton) {
+                mobileMenuButton.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+                mobileMenu.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        mobileMenu.classList.add('hidden');
+                    });
+                });
+            }
+
+            // Modal Logic
+            const openModalButtons = document.querySelectorAll('.open-modal-btn');
+            const closeModalButtons = document.querySelectorAll('.close-modal-btn');
+
+            openModalButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const modalId = button.getAttribute('data-modal');
+                    const modal = document.getElementById(modalId);
+                    if(modal) modal.style.display = 'flex';
+                });
+            });
+
+            closeModalButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    button.closest('.modal').style.display = 'none';
+                });
+            });
+
+            window.addEventListener('click', (event) => {
+                if (event.target.classList.contains('modal')) {
+                    event.target.style.display = 'none';
+                }
+            });
+            
+             // Scroll Animations
+            const animatedElements = document.querySelectorAll('.scroll-animate');
+            const animateObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+            animatedElements.forEach(el => animateObserver.observe(el));
+
+            // Spotlight Card Effect
+            const spotlightCards = document.querySelectorAll('.spotlight-card');
+            spotlightCards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    card.style.setProperty('--x', e.clientX - rect.left + 'px');
+                    card.style.setProperty('--y', e.clientY - rect.top + 'px');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
