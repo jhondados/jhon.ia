@@ -35,6 +35,15 @@
                     },
                     backgroundImage: {
                         'hero-pattern': 'radial-gradient(circle at 50% 0%, rgba(29, 78, 216, 0.15) 0%, rgba(2, 6, 23, 0) 70%)',
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
                     }
                 }
             }
@@ -46,7 +55,7 @@
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
             line-height: 1.7;
-            color: #334155; /* Texto padrão escuro para áreas claras */
+            color: #334155;
         }
 
         /* Nav Glass */
@@ -61,38 +70,42 @@
             background-color: #1e293b; 
             border: 1px solid #334155;
             color: #f1f5f9;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .card-dark:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px);
             border-color: #3b82f6;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
         }
 
-        /* Cards em Fundo Claro (Shadow) */
+        /* Cards em Fundo Claro */
         .card-light {
             background-color: #ffffff;
             border: 1px solid #e2e8f0;
             color: #1e293b;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
         }
         .card-light:hover {
             transform: translateY(-5px);
-            border-color: #cbd5e1;
+            border-color: #94a3b8;
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
         }
 
-        /* Tipografia */
-        .gradient-text {
-            background: linear-gradient(to right, #60a5fa, #818cf8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        /* Reveal Animation Class (JS Triggers this) */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* Timeline */
         .timeline-item {
-            border-left: 2px solid #e2e8f0; /* Linha clara para o fundo branco */
+            border-left: 2px solid #e2e8f0;
             padding-left: 2rem;
             padding-bottom: 3rem;
             position: relative;
@@ -113,19 +126,31 @@
 </head>
 <body class="antialiased bg-corp-light">
 
-    <header class="fixed w-full z-50 glass-nav">
+    <header class="fixed w-full z-50 glass-nav transition-all duration-300">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <a href="#" class="text-xl font-bold tracking-tight text-white flex items-center gap-2">
-                <div class="w-8 h-8 rounded bg-blue-600 flex items-center justify-center text-white font-mono font-bold">J</div>
+            <a href="#" class="text-xl font-bold tracking-tight text-white flex items-center gap-2 group">
+                <div class="w-8 h-8 rounded bg-blue-600 flex items-center justify-center text-white font-mono font-bold group-hover:scale-110 transition-transform">J</div>
                 JHON<span class="text-blue-400">.AI</span>
             </a>
             <nav class="hidden md:flex space-x-8 text-sm font-medium text-slate-300">
-                <a href="#resume" class="hover:text-white transition-colors">Currículo</a>
-                <a href="#expertise" class="hover:text-white transition-colors">Stack</a>
-                <a href="#certifications" class="text-blue-400 font-bold hover:text-white transition-colors">Google Skills</a>
-                <a href="#projects" class="hover:text-white transition-colors">Portfólio (10)</a>
+                <a href="#resume" class="hover:text-white transition-colors relative group">
+                    Currículo
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-500 transition-all group-hover:w-full"></span>
+                </a>
+                <a href="#expertise" class="hover:text-white transition-colors relative group">
+                    Stack
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-500 transition-all group-hover:w-full"></span>
+                </a>
+                <a href="#certifications" class="text-blue-400 font-bold hover:text-white transition-colors relative group">
+                    Google Skills
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-white transition-all group-hover:w-full"></span>
+                </a>
+                <a href="#projects" class="hover:text-white transition-colors relative group">
+                    Portfólio (10)
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-500 transition-all group-hover:w-full"></span>
+                </a>
             </nav>
-            <a href="https://www.linkedin.com/in/jhon-enrique-cernadas-martinez-03215a69/" target="_blank" class="hidden md:inline-flex items-center gap-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 px-5 py-2.5 rounded shadow-lg transition-all">
+            <a href="https://www.linkedin.com/in/jhon-enrique-cernadas-martinez-03215a69/" target="_blank" class="hidden md:inline-flex items-center gap-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 px-5 py-2.5 rounded shadow-lg hover:shadow-blue-500/20 transition-all transform hover:-translate-y-0.5">
                 <i data-lucide="linkedin" class="w-4 h-4"></i> Conectar
             </a>
         </div>
@@ -134,27 +159,27 @@
     <main class="pt-20">
         
         <section class="relative bg-corp-darker text-white py-24 lg:py-32 overflow-hidden">
-            <div class="absolute inset-0 bg-hero-pattern"></div>
-            <div class="max-w-5xl mx-auto px-6 text-center relative z-10">
-                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-400 text-xs font-mono font-bold tracking-widest uppercase mb-8">
+            <div class="absolute inset-0 bg-hero-pattern animate-pulse" style="animation-duration: 4s;"></div>
+            <div class="max-w-5xl mx-auto px-6 text-center relative z-10 reveal active">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-blue-500/30 bg-blue-500/10 text-blue-400 text-xs font-mono font-bold tracking-widest uppercase mb-8 hover:bg-blue-500/20 transition-colors cursor-default">
                     <span class="relative flex h-2 w-2">
                       <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
                       <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
                     </span>
                     Consultor Sênior em IA & Dados
                 </div>
-                <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+                <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight tracking-tight">
                     Jhon Enrique<span class="text-blue-500">.</span>
                 </h1>
                 <p class="text-xl text-slate-400 max-w-2xl mx-auto font-light leading-relaxed mb-10">
                     Transformando dados em decisões estratégicas e código em inteligência autônoma. 
-                    <span class="text-slate-200 font-medium">Santillana • Google Cloud • MBA AI & Data</span>
+                    <span class="text-slate-200 font-medium block mt-2">Santillana • Google Cloud • MBA AI & Data</span>
                 </p>
                 <div class="flex flex-col sm:flex-row justify-center gap-4">
-                    <a href="#resume" class="px-8 py-4 bg-white text-slate-900 font-bold rounded hover:bg-slate-200 transition-all flex items-center justify-center gap-2">
+                    <a href="#resume" class="px-8 py-4 bg-white text-slate-900 font-bold rounded hover:bg-slate-200 hover:scale-105 transition-all flex items-center justify-center gap-2 shadow-xl">
                         Ver Currículo <i data-lucide="arrow-down" class="w-4 h-4"></i>
                     </a>
-                    <a href="#projects" class="px-8 py-4 bg-transparent border border-slate-700 text-white font-medium rounded hover:bg-slate-800 transition-all flex items-center justify-center gap-2">
+                    <a href="#projects" class="px-8 py-4 bg-transparent border border-slate-700 text-white font-medium rounded hover:bg-slate-800 hover:border-slate-500 transition-all flex items-center justify-center gap-2">
                         Ver Projetos
                     </a>
                 </div>
@@ -162,28 +187,27 @@
         </section>
 
         <section id="resume" class="bg-white text-slate-800 py-24 border-b border-slate-200">
-            <div class="max-w-7xl mx-auto px-6">
+            <div class="max-w-7xl mx-auto px-6 reveal">
                 <div class="flex flex-col md:flex-row justify-between items-start mb-16">
                     <div>
                         <h2 class="text-3xl font-bold text-slate-900 mb-2">Currículo Profissional</h2>
                         <p class="text-slate-500">Resumo executivo de carreira e qualificações.</p>
                     </div>
-                    <button onclick="window.print()" class="mt-4 md:mt-0 flex items-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 px-5 py-2.5 rounded border border-slate-300 transition-colors text-sm font-medium">
+                    <button onclick="window.print()" class="mt-4 md:mt-0 flex items-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 px-5 py-2.5 rounded border border-slate-300 transition-colors text-sm font-medium hover:shadow-md">
                         <i data-lucide="printer" class="w-4 h-4"></i> Imprimir PDF
                     </button>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
-                    
                     <div class="lg:col-span-4 space-y-12">
-                        <div>
+                        <div class="reveal" style="transition-delay: 100ms;">
                             <h3 class="text-lg font-bold text-slate-900 border-b-2 border-blue-600 pb-2 mb-4 inline-block">Sobre</h3>
                             <p class="text-slate-600 leading-relaxed">
                                 Profissional Sênior baseado em Osasco-SP, com dupla expertise em análise de dados corporativos e engenharia de IA de ponta. Focado em resultados de negócio e inovação tecnológica escalável.
                             </p>
                         </div>
 
-                        <div>
+                        <div class="reveal" style="transition-delay: 200ms;">
                             <h3 class="text-lg font-bold text-slate-900 border-b-2 border-blue-600 pb-2 mb-4 inline-block">Educação</h3>
                             <div class="space-y-6">
                                 <div class="card-light p-5 rounded-lg border-l-4 border-l-blue-600">
@@ -199,7 +223,7 @@
                             </div>
                         </div>
 
-                        <div>
+                        <div class="reveal" style="transition-delay: 300ms;">
                             <h3 class="text-lg font-bold text-slate-900 border-b-2 border-blue-600 pb-2 mb-4 inline-block">Idiomas</h3>
                             <ul class="space-y-3 text-sm text-slate-700">
                                 <li class="flex justify-between border-b border-slate-100 pb-2"><span>Espanhol</span> <span class="font-bold text-blue-600">Nativo</span></li>
@@ -209,7 +233,7 @@
                         </div>
                     </div>
 
-                    <div class="lg:col-span-8">
+                    <div class="lg:col-span-8 reveal" style="transition-delay: 400ms;">
                         <h3 class="text-2xl font-bold text-slate-900 mb-10 flex items-center gap-3">
                             <i data-lucide="briefcase" class="text-blue-600"></i> Experiência Profissional
                         </h3>
@@ -263,12 +287,12 @@
         </section>
 
         <section id="expertise" class="bg-corp-dark text-white py-24">
-            <div class="max-w-7xl mx-auto px-6">
+            <div class="max-w-7xl mx-auto px-6 reveal">
                 <h2 class="text-3xl font-bold text-white mb-2">Tech Stack</h2>
                 <p class="text-slate-400 mb-12">Ferramentas e frameworks dominados.</p>
                 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="card-dark p-8 rounded-xl border-t-4 border-t-blue-500">
+                    <div class="card-dark p-8 rounded-xl border-t-4 border-t-blue-500 hover:bg-slate-800">
                         <div class="flex items-center gap-3 mb-4 text-blue-400">
                             <i data-lucide="cpu" class="w-6 h-6"></i>
                             <h3 class="font-bold text-lg">Generative AI</h3>
@@ -277,7 +301,7 @@
                             Google Vertex AI, Gemini Pro, LangChain, RAG Architecture, Fine-tuning, Vector Databases.
                         </p>
                     </div>
-                    <div class="card-dark p-8 rounded-xl border-t-4 border-t-indigo-500">
+                    <div class="card-dark p-8 rounded-xl border-t-4 border-t-indigo-500 hover:bg-slate-800">
                         <div class="flex items-center gap-3 mb-4 text-indigo-400">
                             <i data-lucide="database" class="w-6 h-6"></i>
                             <h3 class="font-bold text-lg">Data Engineering</h3>
@@ -286,7 +310,7 @@
                             Google BigQuery, SQL Avançado, Python (Pandas/NumPy), ETL Pipelines, Cloud Functions.
                         </p>
                     </div>
-                    <div class="card-dark p-8 rounded-xl border-t-4 border-t-teal-500">
+                    <div class="card-dark p-8 rounded-xl border-t-4 border-t-teal-500 hover:bg-slate-800">
                         <div class="flex items-center gap-3 mb-4 text-teal-400">
                             <i data-lucide="bar-chart-2" class="w-6 h-6"></i>
                             <h3 class="font-bold text-lg">Business Intelligence</h3>
@@ -300,22 +324,22 @@
         </section>
 
         <section id="certifications" class="bg-corp-gray text-slate-800 py-24">
-            <div class="max-w-7xl mx-auto px-6">
+            <div class="max-w-7xl mx-auto px-6 reveal">
                 <div class="flex flex-col md:flex-row justify-between items-end mb-10 pb-6 border-b border-slate-300">
                     <div class="flex items-center gap-5">
-                        <img src="https://cdn.qwiklabs.com/assets/leagues/silver_sm_new-deaa0090c8b38c1cde7cbc34bb895870009e6fee.png" class="w-20 h-20 drop-shadow-md" alt="Silver League Badge">
+                        <img src="https://cdn.qwiklabs.com/assets/leagues/silver_sm_new-deaa0090c8b38c1cde7cbc34bb895870009e6fee.png" class="w-20 h-20 drop-shadow-md hover:scale-110 transition-transform" alt="Silver League Badge">
                         <div>
                             <h2 class="text-2xl font-bold text-slate-900">Google Cloud Authority</h2>
                             <p class="text-blue-700 font-bold">Silver League Member • 29,200+ Pontos</p>
                         </div>
                     </div>
-                    <a href="https://www.skills.google/public_profiles/ff80f506-4763-40a4-953a-45d798b0e9e8" target="_blank" class="mt-4 md:mt-0 flex items-center gap-2 text-blue-600 font-bold hover:text-blue-800 transition-colors bg-white px-4 py-2 rounded-lg border border-slate-200 shadow-sm">
+                    <a href="https://www.skills.google/public_profiles/ff80f506-4763-40a4-953a-45d798b0e9e8" target="_blank" class="mt-4 md:mt-0 flex items-center gap-2 text-blue-600 font-bold hover:text-blue-800 transition-colors bg-white px-4 py-2 rounded-lg border border-slate-200 shadow-sm hover:shadow-md">
                         Ver Perfil Oficial <i data-lucide="external-link" class="w-4 h-4"></i>
                     </a>
                 </div>
 
                 <h3 class="text-lg font-bold text-slate-700 mb-4 flex items-center gap-2">
-                    <span class="w-2 h-2 bg-blue-600 rounded-full"></span> Conquistas Recentes (2026)
+                    <span class="w-2 h-2 bg-blue-600 rounded-full animate-pulse"></span> Conquistas Recentes (2026)
                 </h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
                     <div class="card-light p-6 rounded-lg flex items-center gap-4">
@@ -345,20 +369,20 @@
                     <span class="w-2 h-2 bg-indigo-600 rounded-full"></span> Especializações (2025)
                 </h3>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-                    <div class="bg-white p-4 rounded border border-slate-200 text-slate-600 font-medium text-center">Trust & Security</div>
-                    <div class="bg-white p-4 rounded border border-slate-200 text-slate-600 font-medium text-center">Vertex AI Notebooks</div>
-                    <div class="bg-white p-4 rounded border border-slate-200 text-slate-600 font-medium text-center">Gen AI Agents</div>
-                    <div class="bg-white p-4 rounded border border-slate-200 text-slate-600 font-medium text-center">Responsible AI</div>
-                    <div class="bg-white p-4 rounded border border-slate-200 text-slate-600 font-medium text-center">BigQuery ML</div>
-                    <div class="bg-white p-4 rounded border border-slate-200 text-slate-600 font-medium text-center">MLOps for GenAI</div>
-                    <div class="bg-white p-4 rounded border border-slate-200 text-slate-600 font-medium text-center">Large Language Models</div>
-                    <div class="bg-white p-4 rounded border border-slate-200 text-slate-600 font-medium text-center">Cloud Network Security</div>
+                    <div class="bg-white p-4 rounded border border-slate-200 text-slate-600 font-medium text-center hover:border-indigo-400 transition-colors">Trust & Security</div>
+                    <div class="bg-white p-4 rounded border border-slate-200 text-slate-600 font-medium text-center hover:border-indigo-400 transition-colors">Vertex AI Notebooks</div>
+                    <div class="bg-white p-4 rounded border border-slate-200 text-slate-600 font-medium text-center hover:border-indigo-400 transition-colors">Gen AI Agents</div>
+                    <div class="bg-white p-4 rounded border border-slate-200 text-slate-600 font-medium text-center hover:border-indigo-400 transition-colors">Responsible AI</div>
+                    <div class="bg-white p-4 rounded border border-slate-200 text-slate-600 font-medium text-center hover:border-indigo-400 transition-colors">BigQuery ML</div>
+                    <div class="bg-white p-4 rounded border border-slate-200 text-slate-600 font-medium text-center hover:border-indigo-400 transition-colors">MLOps for GenAI</div>
+                    <div class="bg-white p-4 rounded border border-slate-200 text-slate-600 font-medium text-center hover:border-indigo-400 transition-colors">Large Language Models</div>
+                    <div class="bg-white p-4 rounded border border-slate-200 text-slate-600 font-medium text-center hover:border-indigo-400 transition-colors">Cloud Network Security</div>
                 </div>
             </div>
         </section>
 
         <section id="projects" class="bg-corp-darker text-white py-24">
-            <div class="max-w-7xl mx-auto px-6">
+            <div class="max-w-7xl mx-auto px-6 reveal">
                 <h2 class="text-3xl font-bold text-white mb-4">Deca-Suite: Engenharia Aplicada</h2>
                 <p class="text-slate-400 mb-12">10 Soluções Enterprise detalhadas. Clique para ver a arquitetura.</p>
 
@@ -366,9 +390,9 @@
                     <div onclick="openModal('modal-legal')" class="card-dark p-8 rounded-xl cursor-pointer group h-full flex flex-col hover:border-blue-500">
                         <div class="flex justify-between mb-4">
                             <span class="text-xs font-bold text-blue-400 border border-blue-400/30 px-2 py-1 rounded">JURÍDICO</span>
-                            <i data-lucide="scale" class="text-slate-500 group-hover:text-white"></i>
+                            <i data-lucide="scale" class="text-slate-500 group-hover:text-white transition-colors"></i>
                         </div>
-                        <h3 class="font-bold text-white text-lg mb-2">Legal Eagle AI</h3>
+                        <h3 class="font-bold text-white text-lg mb-2 group-hover:text-blue-400 transition-colors">Legal Eagle AI</h3>
                         <p class="text-sm text-slate-400 flex-grow">Auditoria de contratos com NLP e Vertex AI.</p>
                         <span class="text-xs text-blue-400 font-mono mt-4 flex items-center gap-1">VER DEEP DIVE <i data-lucide="arrow-right" class="w-3 h-3"></i></span>
                     </div>
@@ -376,9 +400,9 @@
                     <div onclick="openModal('modal-talent')" class="card-dark p-8 rounded-xl cursor-pointer group h-full flex flex-col hover:border-indigo-500">
                         <div class="flex justify-between mb-4">
                             <span class="text-xs font-bold text-indigo-400 border border-indigo-400/30 px-2 py-1 rounded">HR TECH</span>
-                            <i data-lucide="users" class="text-slate-500 group-hover:text-white"></i>
+                            <i data-lucide="users" class="text-slate-500 group-hover:text-white transition-colors"></i>
                         </div>
-                        <h3 class="font-bold text-white text-lg mb-2">TalentMatch Auto</h3>
+                        <h3 class="font-bold text-white text-lg mb-2 group-hover:text-indigo-400 transition-colors">TalentMatch Auto</h3>
                         <p class="text-sm text-slate-400 flex-grow">Recrutamento autônomo com agentes de IA.</p>
                         <span class="text-xs text-indigo-400 font-mono mt-4 flex items-center gap-1">VER DEEP DIVE <i data-lucide="arrow-right" class="w-3 h-3"></i></span>
                     </div>
@@ -386,79 +410,79 @@
                     <div onclick="openModal('modal-finguard')" class="card-dark p-8 rounded-xl cursor-pointer group h-full flex flex-col hover:border-teal-500">
                         <div class="flex justify-between mb-4">
                             <span class="text-xs font-bold text-teal-400 border border-teal-400/30 px-2 py-1 rounded">FINANÇAS</span>
-                            <i data-lucide="shield-check" class="text-slate-500 group-hover:text-white"></i>
+                            <i data-lucide="shield-check" class="text-slate-500 group-hover:text-white transition-colors"></i>
                         </div>
-                        <h3 class="font-bold text-white text-lg mb-2">FinGuard Sentinel</h3>
+                        <h3 class="font-bold text-white text-lg mb-2 group-hover:text-teal-400 transition-colors">FinGuard Sentinel</h3>
                         <p class="text-sm text-slate-400 flex-grow">Detecção de fraude em tempo real com ML.</p>
                         <span class="text-xs text-teal-400 font-mono mt-4 flex items-center gap-1">VER DEEP DIVE <i data-lucide="arrow-right" class="w-3 h-3"></i></span>
                     </div>
 
-                    <div onclick="openModal('modal-supply')" class="card-dark p-8 rounded-xl cursor-pointer group h-full flex flex-col">
+                    <div onclick="openModal('modal-supply')" class="card-dark p-8 rounded-xl cursor-pointer group h-full flex flex-col hover:border-orange-500">
                         <div class="flex justify-between mb-4">
                             <span class="text-xs font-bold text-orange-400 border border-orange-400/30 px-2 py-1 rounded">LOGÍSTICA</span>
-                            <i data-lucide="truck" class="text-slate-500 group-hover:text-white"></i>
+                            <i data-lucide="truck" class="text-slate-500 group-hover:text-white transition-colors"></i>
                         </div>
-                        <h3 class="font-bold text-white text-lg mb-2">Supply Chain Twin</h3>
+                        <h3 class="font-bold text-white text-lg mb-2 group-hover:text-orange-400 transition-colors">Supply Chain Twin</h3>
                         <p class="text-sm text-slate-400 flex-grow">Previsão de demanda e otimização de estoque.</p>
                         <span class="text-xs text-orange-400 font-mono mt-4 flex items-center gap-1">VER DEEP DIVE <i data-lucide="arrow-right" class="w-3 h-3"></i></span>
                     </div>
 
-                    <div onclick="openModal('modal-persona')" class="card-dark p-8 rounded-xl cursor-pointer group h-full flex flex-col">
+                    <div onclick="openModal('modal-persona')" class="card-dark p-8 rounded-xl cursor-pointer group h-full flex flex-col hover:border-pink-500">
                         <div class="flex justify-between mb-4">
                             <span class="text-xs font-bold text-pink-400 border border-pink-400/30 px-2 py-1 rounded">MARKETING</span>
-                            <i data-lucide="target" class="text-slate-500 group-hover:text-white"></i>
+                            <i data-lucide="target" class="text-slate-500 group-hover:text-white transition-colors"></i>
                         </div>
-                        <h3 class="font-bold text-white text-lg mb-2">Hyper-Persona AI</h3>
+                        <h3 class="font-bold text-white text-lg mb-2 group-hover:text-pink-400 transition-colors">Hyper-Persona AI</h3>
                         <p class="text-sm text-slate-400 flex-grow">Marketing 1:1 com geração de conteúdo.</p>
                         <span class="text-xs text-pink-400 font-mono mt-4 flex items-center gap-1">VER DEEP DIVE <i data-lucide="arrow-right" class="w-3 h-3"></i></span>
                     </div>
 
-                    <div onclick="openModal('modal-iot')" class="card-dark p-8 rounded-xl cursor-pointer group h-full flex flex-col">
+                    <div onclick="openModal('modal-iot')" class="card-dark p-8 rounded-xl cursor-pointer group h-full flex flex-col hover:border-cyan-500">
                         <div class="flex justify-between mb-4">
                             <span class="text-xs font-bold text-cyan-400 border border-cyan-400/30 px-2 py-1 rounded">INDÚSTRIA</span>
-                            <i data-lucide="activity" class="text-slate-500 group-hover:text-white"></i>
+                            <i data-lucide="activity" class="text-slate-500 group-hover:text-white transition-colors"></i>
                         </div>
-                        <h3 class="font-bold text-white text-lg mb-2">IoT Predictive</h3>
+                        <h3 class="font-bold text-white text-lg mb-2 group-hover:text-cyan-400 transition-colors">IoT Predictive</h3>
                         <p class="text-sm text-slate-400 flex-grow">Manutenção preditiva para fábricas.</p>
                         <span class="text-xs text-cyan-400 font-mono mt-4 flex items-center gap-1">VER DEEP DIVE <i data-lucide="arrow-right" class="w-3 h-3"></i></span>
                     </div>
 
-                    <div onclick="openModal('modal-omni')" class="card-dark p-8 rounded-xl cursor-pointer group h-full flex flex-col">
+                    <div onclick="openModal('modal-omni')" class="card-dark p-8 rounded-xl cursor-pointer group h-full flex flex-col hover:border-emerald-500">
                         <div class="flex justify-between mb-4">
                             <span class="text-xs font-bold text-emerald-400 border border-emerald-400/30 px-2 py-1 rounded">CX</span>
-                            <i data-lucide="mic" class="text-slate-500 group-hover:text-white"></i>
+                            <i data-lucide="mic" class="text-slate-500 group-hover:text-white transition-colors"></i>
                         </div>
-                        <h3 class="font-bold text-white text-lg mb-2">OmniVoice AI</h3>
+                        <h3 class="font-bold text-white text-lg mb-2 group-hover:text-emerald-400 transition-colors">OmniVoice AI</h3>
                         <p class="text-sm text-slate-400 flex-grow">IA Conversacional para Call Centers.</p>
                         <span class="text-xs text-emerald-400 font-mono mt-4 flex items-center gap-1">VER DEEP DIVE <i data-lucide="arrow-right" class="w-3 h-3"></i></span>
                     </div>
 
-                    <div onclick="openModal('modal-doc')" class="card-dark p-8 rounded-xl cursor-pointer group h-full flex flex-col">
+                    <div onclick="openModal('modal-doc')" class="card-dark p-8 rounded-xl cursor-pointer group h-full flex flex-col hover:border-slate-400">
                         <div class="flex justify-between mb-4">
                             <span class="text-xs font-bold text-slate-300 border border-slate-300/30 px-2 py-1 rounded">OPS</span>
-                            <i data-lucide="file-text" class="text-slate-500 group-hover:text-white"></i>
+                            <i data-lucide="file-text" class="text-slate-500 group-hover:text-white transition-colors"></i>
                         </div>
-                        <h3 class="font-bold text-white text-lg mb-2">Intelligent Docs</h3>
+                        <h3 class="font-bold text-white text-lg mb-2 group-hover:text-slate-300 transition-colors">Intelligent Docs</h3>
                         <p class="text-sm text-slate-400 flex-grow">OCR Cognitivo para processamento fiscal.</p>
                         <span class="text-xs text-slate-300 font-mono mt-4 flex items-center gap-1">VER DEEP DIVE <i data-lucide="arrow-right" class="w-3 h-3"></i></span>
                     </div>
 
-                    <div onclick="openModal('modal-trend')" class="card-dark p-8 rounded-xl cursor-pointer group h-full flex flex-col">
+                    <div onclick="openModal('modal-trend')" class="card-dark p-8 rounded-xl cursor-pointer group h-full flex flex-col hover:border-purple-500">
                         <div class="flex justify-between mb-4">
                             <span class="text-xs font-bold text-purple-400 border border-purple-400/30 px-2 py-1 rounded">STRATEGY</span>
-                            <i data-lucide="trending-up" class="text-slate-500 group-hover:text-white"></i>
+                            <i data-lucide="trending-up" class="text-slate-500 group-hover:text-white transition-colors"></i>
                         </div>
-                        <h3 class="font-bold text-white text-lg mb-2">Trend Forecaster</h3>
+                        <h3 class="font-bold text-white text-lg mb-2 group-hover:text-purple-400 transition-colors">Trend Forecaster</h3>
                         <p class="text-sm text-slate-400 flex-grow">Crawler de tendências e demanda.</p>
                         <span class="text-xs text-purple-400 font-mono mt-4 flex items-center gap-1">VER DEEP DIVE <i data-lucide="arrow-right" class="w-3 h-3"></i></span>
                     </div>
 
-                    <div onclick="openModal('modal-eco')" class="card-dark p-8 rounded-xl cursor-pointer group h-full flex flex-col md:col-span-2 lg:col-span-3">
+                    <div onclick="openModal('modal-eco')" class="card-dark p-8 rounded-xl cursor-pointer group h-full flex flex-col md:col-span-2 lg:col-span-3 hover:border-green-500">
                         <div class="flex justify-between mb-4">
                             <span class="text-xs font-bold text-green-400 border border-green-400/30 px-2 py-1 rounded">ESG</span>
-                            <i data-lucide="leaf" class="text-slate-500 group-hover:text-white"></i>
+                            <i data-lucide="leaf" class="text-slate-500 group-hover:text-white transition-colors"></i>
                         </div>
-                        <h3 class="font-bold text-white text-lg mb-2">EcoGrid Optimizer</h3>
+                        <h3 class="font-bold text-white text-lg mb-2 group-hover:text-green-400 transition-colors">EcoGrid Optimizer</h3>
                         <p class="text-sm text-slate-400 flex-grow">Otimização energética com Reinforcement Learning.</p>
                         <span class="text-xs text-green-400 font-mono mt-4 flex items-center gap-1">VER DEEP DIVE <i data-lucide="arrow-right" class="w-3 h-3"></i></span>
                     </div>
@@ -466,12 +490,12 @@
             </div>
         </section>
 
-        <footer class="bg-corp-darker text-slate-400 py-16 text-center border-t border-slate-800">
+        <footer class="bg-corp-darker text-slate-400 py-16 text-center border-t border-slate-800 reveal">
             <div class="max-w-4xl mx-auto px-6">
-                <h2 class="text-2xl font-bold text-white mb-6">Disponível para desafios de alto impacto.</h2>
+                <h2 class="text-2xl font-bold text-white mb-6">Contato</h2>
                 <div class="flex justify-center gap-6 mb-8">
-                    <a href="mailto:enriquecernadas2021@gmail.com" class="hover:text-white flex items-center gap-2"><i data-lucide="mail"></i> Email</a>
-                    <a href="https://www.linkedin.com/in/jhon-enrique-cernadas-martinez-03215a69/" target="_blank" class="hover:text-white flex items-center gap-2"><i data-lucide="linkedin"></i> LinkedIn</a>
+                    <a href="mailto:enriquecernadas2021@gmail.com" class="hover:text-white flex items-center gap-2 hover:scale-110 transition-transform"><i data-lucide="mail"></i> Email</a>
+                    <a href="https://www.linkedin.com/in/jhon-enrique-cernadas-martinez-03215a69/" target="_blank" class="hover:text-white flex items-center gap-2 hover:scale-110 transition-transform"><i data-lucide="linkedin"></i> LinkedIn</a>
                 </div>
                 <p class="text-xs font-mono">&copy; 2026 Jhon Enrique.</p>
             </div>
@@ -482,7 +506,7 @@
     <div id="modal-backdrop" class="fixed inset-0 z-[100] hidden bg-slate-950/90 backdrop-blur-md transition-opacity duration-300" onclick="closeAllModals()"></div>
 
     <div id="modal-legal" class="fixed inset-0 z-[101] hidden justify-center overflow-y-auto py-8 px-4 pointer-events-none">
-        <div class="bg-corp-dark border border-slate-700 w-full max-w-4xl rounded-2xl shadow-2xl pointer-events-auto relative flex flex-col mb-10">
+        <div class="bg-corp-dark border border-slate-700 w-full max-w-4xl rounded-2xl shadow-2xl pointer-events-auto relative flex flex-col mb-10 transform scale-95 transition-all duration-300" id="modal-content-legal">
             <div class="sticky top-0 bg-slate-900/95 backdrop-blur z-20 border-b border-slate-700 p-8 flex justify-between items-start rounded-t-2xl">
                 <h2 class="text-3xl font-bold text-white">Legal Eagle AI</h2>
                 <button onclick="closeAllModals()" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-8 h-8"></i></button>
@@ -503,7 +527,7 @@ def predict_risk(contract_text):
     </div>
     
     <div id="modal-talent" class="fixed inset-0 z-[101] hidden justify-center overflow-y-auto py-8 px-4 pointer-events-none">
-        <div class="bg-corp-dark border border-slate-700 w-full max-w-4xl rounded-2xl shadow-2xl pointer-events-auto relative flex flex-col mb-10">
+        <div class="bg-corp-dark border border-slate-700 w-full max-w-4xl rounded-2xl shadow-2xl pointer-events-auto relative flex flex-col mb-10 transform scale-95 transition-all duration-300">
             <div class="sticky top-0 bg-slate-900/95 backdrop-blur z-20 border-b border-slate-700 p-8 flex justify-between items-start rounded-t-2xl">
                 <h2 class="text-3xl font-bold text-white">TalentMatch Auto</h2>
                 <button onclick="closeAllModals()" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-8 h-8"></i></button>
@@ -522,7 +546,7 @@ qa = RetrievalQA.from_chain_type(llm=gemini_pro, retriever=vector_store.as_retri
     </div>
     
     <div id="modal-finguard" class="fixed inset-0 z-[101] hidden justify-center overflow-y-auto py-8 px-4 pointer-events-none">
-        <div class="bg-corp-dark border border-slate-700 w-full max-w-4xl rounded-2xl shadow-2xl pointer-events-auto relative flex flex-col mb-10">
+        <div class="bg-corp-dark border border-slate-700 w-full max-w-4xl rounded-2xl shadow-2xl pointer-events-auto relative flex flex-col mb-10 transform scale-95 transition-all duration-300">
             <div class="sticky top-0 bg-slate-900/95 backdrop-blur z-20 border-b border-slate-700 p-8 flex justify-between items-start rounded-t-2xl">
                 <h2 class="text-3xl font-bold text-white">FinGuard Sentinel</h2>
                 <button onclick="closeAllModals()" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-8 h-8"></i></button>
@@ -539,7 +563,7 @@ qa = RetrievalQA.from_chain_type(llm=gemini_pro, retriever=vector_store.as_retri
     </div>
 
     <div id="modal-supply" class="fixed inset-0 z-[101] hidden justify-center overflow-y-auto py-8 px-4 pointer-events-none">
-        <div class="bg-corp-dark border border-slate-700 w-full max-w-4xl rounded-2xl shadow-2xl pointer-events-auto relative flex flex-col mb-10">
+        <div class="bg-corp-dark border border-slate-700 w-full max-w-4xl rounded-2xl shadow-2xl pointer-events-auto relative flex flex-col mb-10 transform scale-95 transition-all duration-300">
             <div class="sticky top-0 bg-slate-900/95 backdrop-blur z-20 border-b border-slate-700 p-8 flex justify-between items-start rounded-t-2xl">
                 <h2 class="text-3xl font-bold text-white">Supply Chain Twin</h2>
                 <button onclick="closeAllModals()" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-8 h-8"></i></button>
@@ -556,7 +580,7 @@ qa = RetrievalQA.from_chain_type(llm=gemini_pro, retriever=vector_store.as_retri
     </div>
 
     <div id="modal-persona" class="fixed inset-0 z-[101] hidden justify-center overflow-y-auto py-8 px-4 pointer-events-none">
-        <div class="bg-corp-dark border border-slate-700 w-full max-w-4xl rounded-2xl shadow-2xl pointer-events-auto relative flex flex-col mb-10">
+        <div class="bg-corp-dark border border-slate-700 w-full max-w-4xl rounded-2xl shadow-2xl pointer-events-auto relative flex flex-col mb-10 transform scale-95 transition-all duration-300">
             <div class="sticky top-0 bg-slate-900/95 backdrop-blur z-20 border-b border-slate-700 p-8 flex justify-between items-start rounded-t-2xl">
                 <h2 class="text-3xl font-bold text-white">Hyper-Persona AI</h2>
                 <button onclick="closeAllModals()" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-8 h-8"></i></button>
@@ -573,7 +597,7 @@ qa = RetrievalQA.from_chain_type(llm=gemini_pro, retriever=vector_store.as_retri
     </div>
 
     <div id="modal-iot" class="fixed inset-0 z-[101] hidden justify-center overflow-y-auto py-8 px-4 pointer-events-none">
-        <div class="bg-corp-dark border border-slate-700 w-full max-w-4xl rounded-2xl shadow-2xl pointer-events-auto relative flex flex-col mb-10">
+        <div class="bg-corp-dark border border-slate-700 w-full max-w-4xl rounded-2xl shadow-2xl pointer-events-auto relative flex flex-col mb-10 transform scale-95 transition-all duration-300">
             <div class="sticky top-0 bg-slate-900/95 backdrop-blur z-20 border-b border-slate-700 p-8 flex justify-between items-start rounded-t-2xl">
                 <h2 class="text-3xl font-bold text-white">IoT Predictive Core</h2>
                 <button onclick="closeAllModals()" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-8 h-8"></i></button>
@@ -590,7 +614,7 @@ qa = RetrievalQA.from_chain_type(llm=gemini_pro, retriever=vector_store.as_retri
     </div>
 
     <div id="modal-omni" class="fixed inset-0 z-[101] hidden justify-center overflow-y-auto py-8 px-4 pointer-events-none">
-        <div class="bg-corp-dark border border-slate-700 w-full max-w-4xl rounded-2xl shadow-2xl pointer-events-auto relative flex flex-col mb-10">
+        <div class="bg-corp-dark border border-slate-700 w-full max-w-4xl rounded-2xl shadow-2xl pointer-events-auto relative flex flex-col mb-10 transform scale-95 transition-all duration-300">
             <div class="sticky top-0 bg-slate-900/95 backdrop-blur z-20 border-b border-slate-700 p-8 flex justify-between items-start rounded-t-2xl">
                 <h2 class="text-3xl font-bold text-white">OmniVoice AI</h2>
                 <button onclick="closeAllModals()" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-8 h-8"></i></button>
@@ -607,7 +631,7 @@ qa = RetrievalQA.from_chain_type(llm=gemini_pro, retriever=vector_store.as_retri
     </div>
 
     <div id="modal-doc" class="fixed inset-0 z-[101] hidden justify-center overflow-y-auto py-8 px-4 pointer-events-none">
-        <div class="bg-corp-dark border border-slate-700 w-full max-w-4xl rounded-2xl shadow-2xl pointer-events-auto relative flex flex-col mb-10">
+        <div class="bg-corp-dark border border-slate-700 w-full max-w-4xl rounded-2xl shadow-2xl pointer-events-auto relative flex flex-col mb-10 transform scale-95 transition-all duration-300">
             <div class="sticky top-0 bg-slate-900/95 backdrop-blur z-20 border-b border-slate-700 p-8 flex justify-between items-start rounded-t-2xl">
                 <h2 class="text-3xl font-bold text-white">Intelligent Docs</h2>
                 <button onclick="closeAllModals()" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-8 h-8"></i></button>
@@ -624,7 +648,7 @@ qa = RetrievalQA.from_chain_type(llm=gemini_pro, retriever=vector_store.as_retri
     </div>
 
     <div id="modal-trend" class="fixed inset-0 z-[101] hidden justify-center overflow-y-auto py-8 px-4 pointer-events-none">
-        <div class="bg-corp-dark border border-slate-700 w-full max-w-4xl rounded-2xl shadow-2xl pointer-events-auto relative flex flex-col mb-10">
+        <div class="bg-corp-dark border border-slate-700 w-full max-w-4xl rounded-2xl shadow-2xl pointer-events-auto relative flex flex-col mb-10 transform scale-95 transition-all duration-300">
             <div class="sticky top-0 bg-slate-900/95 backdrop-blur z-20 border-b border-slate-700 p-8 flex justify-between items-start rounded-t-2xl">
                 <h2 class="text-3xl font-bold text-white">Trend Forecaster</h2>
                 <button onclick="closeAllModals()" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-8 h-8"></i></button>
@@ -641,7 +665,7 @@ qa = RetrievalQA.from_chain_type(llm=gemini_pro, retriever=vector_store.as_retri
     </div>
 
     <div id="modal-eco" class="fixed inset-0 z-[101] hidden justify-center overflow-y-auto py-8 px-4 pointer-events-none">
-        <div class="bg-corp-dark border border-slate-700 w-full max-w-4xl rounded-2xl shadow-2xl pointer-events-auto relative flex flex-col mb-10">
+        <div class="bg-corp-dark border border-slate-700 w-full max-w-4xl rounded-2xl shadow-2xl pointer-events-auto relative flex flex-col mb-10 transform scale-95 transition-all duration-300">
             <div class="sticky top-0 bg-slate-900/95 backdrop-blur z-20 border-b border-slate-700 p-8 flex justify-between items-start rounded-t-2xl">
                 <h2 class="text-3xl font-bold text-white">EcoGrid Optimizer</h2>
                 <button onclick="closeAllModals()" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-8 h-8"></i></button>
@@ -659,26 +683,62 @@ qa = RetrievalQA.from_chain_type(llm=gemini_pro, retriever=vector_store.as_retri
 
     <script>
         lucide.createIcons();
+
+        // Reveal Animation Logic
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        // Trigger once on load
+        reveal();
+
+        // Modais Logic
         function openModal(modalId) {
             const modal = document.getElementById(modalId);
             const backdrop = document.getElementById('modal-backdrop');
             if (modal) {
                 backdrop.classList.remove('hidden');
                 backdrop.classList.add('block');
+                
                 modal.classList.remove('hidden');
                 modal.classList.add('flex');
+                
+                // Animação de escala do modal
+                setTimeout(() => {
+                    modal.firstElementChild.classList.remove('scale-95');
+                    modal.firstElementChild.classList.add('scale-100');
+                }, 10);
+
                 document.body.style.overflow = 'hidden'; 
             }
         }
+
         function closeAllModals() {
             const backdrop = document.getElementById('modal-backdrop');
             const modals = document.querySelectorAll('[id^="modal-"]');
+            
             backdrop.classList.add('hidden');
             backdrop.classList.remove('block');
+            
             modals.forEach(m => {
                 if(m.id !== 'modal-backdrop') {
-                    m.classList.add('hidden');
-                    m.classList.remove('flex');
+                    // Reseta escala antes de esconder
+                    if(m.firstElementChild) {
+                        m.firstElementChild.classList.remove('scale-100');
+                        m.firstElementChild.classList.add('scale-95');
+                    }
+                    setTimeout(() => {
+                        m.classList.add('hidden');
+                        m.classList.remove('flex');
+                    }, 200); // Espera a transição
                 }
             });
             document.body.style.overflow = 'auto';
